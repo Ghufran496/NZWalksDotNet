@@ -16,7 +16,8 @@
         public Guid RegionId { get; set; }
 
 
-        //in order to connect with Diffculty.cs model we should have to write some navigation properties
+        //in order to connect with Diffculty.cs model we should have to write some
+        //navigation properties
         //these are defining one-one relation b/w walk and Difficuty and walk and Region
         public Difficulty Difficulty { get; set;}
 
