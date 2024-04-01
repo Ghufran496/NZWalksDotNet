@@ -6,6 +6,7 @@ using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
 using NZWalks.API.Repositories;
+using NZWalks.API.CustomActionFilter;
 
 
 //adding automapper functionlaity
@@ -68,7 +69,9 @@ namespace NZWalks.API.Controllers
         }
 
         //post Request
+        //use of custom validation model attribute to check that our model is valid or not alternate of using if - else
         [HttpPost]
+        [ValidateModelAttributes]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             //convert our Dto into DOmain model
@@ -88,6 +91,7 @@ namespace NZWalks.API.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModelAttributes]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             //map dto to domain model
@@ -133,6 +137,61 @@ namespace NZWalks.API.Controllers
 
     }
 }
+
+    /*
+        [HttpPut]
+        [Route("{id:Guid}")]
+        [ValidateModelAttributes]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        {
+
+            
+                //map dto to domain model
+                var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
+
+                regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
+
+                // If Null then NotFound
+                if (regionDomainModel == null)
+                {
+                    return NotFound();
+                }
+
+                //convert domain model to Dto
+                var RegionDto = mapper.Map<RegionDto>(regionDomainModel);
+
+                return Ok(RegionDto);
+            }
+            
+            
+
+
+        }
+
+        //Delete Region
+        //Delete Region By ID Url: https://localhost:portnum/api/Regions/{id}
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+
+            var regionDomainModel = await regionRepository.DeleteAsync(id);
+            if (regionDomainModel == null)
+            {
+                return NotFound();
+            }
+
+            //optional
+            //return deleted region back to so; map Domain model to DTO
+
+            var RegionDto = mapper.Map<RegionDto>(regionDomainModel);
+
+            return Ok(RegionDto);
+        }
+    */
+
+  
 
 
 /*
