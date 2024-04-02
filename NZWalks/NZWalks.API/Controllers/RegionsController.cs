@@ -7,6 +7,7 @@ using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
 using NZWalks.API.Repositories;
 using NZWalks.API.CustomActionFilter;
+using Microsoft.AspNetCore.Authorization;
 
 
 //adding automapper functionlaity
@@ -17,6 +18,7 @@ namespace NZWalks.API.Controllers
     //https://localhost:portnum/api/Regions
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;

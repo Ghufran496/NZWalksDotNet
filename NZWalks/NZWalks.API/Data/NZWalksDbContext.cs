@@ -7,7 +7,7 @@ namespace NZWalks.API.Data
     {
         //shortcut for constructor ctor double tab
 
-        public NZWalksDbContext(DbContextOptions dbContextOptions): base(dbContextOptions)
+        public NZWalksDbContext(DbContextOptions<NZWalksDbContext> dbContextOptions): base(dbContextOptions)
         {
                 
         }
