@@ -1,8 +1,10 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using NZWalks.API.Data;
 using NZWalks.API.Mappings;
 using NZWalks.API.Repositories;
@@ -15,7 +17,40 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen(); chnaged to this: because we wanted to add authorization header to swagger
+
+//this is a one time setup that we have to make when we want to add auth and authorization into header when accessing 
+//through swagger endpoint
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "NZ Walks API", Version = "v1" });
+    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = JwtBearerDefaults.AuthenticationScheme
+                },
+                Scheme = "Oauth2",
+                Name = JwtBearerDefaults.AuthenticationScheme,
+                In = ParameterLocation.Header
+            },
+            new List<string>()
+        }
+    });
+});
 
 //we cannot add two dbcontext at the same time but in order them to work fine we have to explictliy specify the
 //type in constructor too in case of NZwalksDbContext <NzWalksDbContext> and in case of NZWalksAuthDbContext mention
@@ -24,14 +59,33 @@ builder.Services.AddDbContext<NZWalksDbContext>(options => options.UseSqlServer(
 builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksAuthConnectionString")));
 
-
+//injecting repositories
 builder.Services.AddScoped<IRegionRepository,SQLRegionRepository>();
 builder.Services.AddScoped<IWalkRepository, SQLWalkRespository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+
 //for testing of INmemory:
 //builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();
 
 //for this we have to install new package automapper injection package 12.0.1
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+//adding identitiy
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("NZWalks")
+    .AddEntityFrameworkStores<NZWalksAuthDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
 
 //adding authentication
 
@@ -67,3 +121,23 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
+
+/*
+ * 
+ * {
+  "username": "reader@nzwalks.com",
+  "password": "Reader@123"
+}
+
+{
+  "username": "write@nzwalks.com",
+  "password": "Writer@123",
+  "roles": [
+    "Writer"
+  ]
+}
+ *
+ */

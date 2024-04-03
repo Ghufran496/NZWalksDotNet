@@ -18,7 +18,7 @@ namespace NZWalks.API.Controllers
     //https://localhost:portnum/api/Regions
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
@@ -35,6 +35,7 @@ namespace NZWalks.API.Controllers
         //to convert into async do three things 1- add async; 2- wrap return type around Task<>; 3- add await and change method of tolistasync provided in new library
         //Get All Region Url: https://localhost:portnum/api/Regions
         [HttpGet]
+        [Authorize(Roles ="Reader")]
         public async Task<IActionResult> GetAll()
         {
             //accessing from DB using DBContext - Domain Models
@@ -53,6 +54,7 @@ namespace NZWalks.API.Controllers
         //Get Region By ID Url: https://localhost:portnum/api/Regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
 
@@ -74,6 +76,7 @@ namespace NZWalks.API.Controllers
         //use of custom validation model attribute to check that our model is valid or not alternate of using if - else
         [HttpPost]
         [ValidateModelAttributes]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             //convert our Dto into DOmain model
@@ -94,6 +97,7 @@ namespace NZWalks.API.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModelAttributes]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             //map dto to domain model
@@ -117,9 +121,11 @@ namespace NZWalks.API.Controllers
 
         //Delete Region
         //Delete Region By ID Url: https://localhost:portnum/api/Regions/{id}
+        //if we want to give access to any method to multiple roles you can specify like [Authorize(Roles = "Writer,Reader")]
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer,Reader")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
 
