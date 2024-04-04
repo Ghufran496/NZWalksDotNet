@@ -24,14 +24,49 @@ namespace NZWalks.API.Controllers
         private readonly NZWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper,
+            ILogger<RegionsController> logger)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
+        //for practice of displaying logs in case of error
+        /*
+        [HttpGet]
+        //[Authorize(Roles = "Reader")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                throw new Exception("This is a custom exception");
+
+
+                //accessing from DB using DBContext - Domain Models
+                var regionsDomain = await regionRepository.GetAllAsync();
+
+                //Map these Domain Models to DTOs using automapper
+
+                var regionsDto = mapper.Map<List<RegionDto>>(regionsDomain);
+
+                //return DTOs
+                return Ok(regionsDto);
+            }catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                throw;
+            }
+
+        }
+
+        */
+
+
+        
         //to convert into async do three things 1- add async; 2- wrap return type around Task<>; 3- add await and change method of tolistasync provided in new library
         //Get All Region Url: https://localhost:portnum/api/Regions
         [HttpGet]
@@ -50,6 +85,7 @@ namespace NZWalks.API.Controllers
 
         }
 
+        
 
         //Get Region By ID Url: https://localhost:portnum/api/Regions/{id}
         [HttpGet]

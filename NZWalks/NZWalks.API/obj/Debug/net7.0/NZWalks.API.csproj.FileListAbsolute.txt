@@ -84,3 +84,12 @@ L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7
 L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
 L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
 L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.AspNetCore.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Extensions.Hosting.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Extensions.Logging.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Formatting.Compact.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Settings.Configuration.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Sinks.Console.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
+L:\Work\ASP NET Course\Practice\NZWalksDotNet\NZWalks\NZWalks.API\bin\Debug\net7.0\Serilog.Sinks.File.dll
