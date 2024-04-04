@@ -17,6 +17,8 @@ namespace NZWalks.API.Data
         public DbSet<Region> Regions { get; set; }
         public DbSet<Walk> Walks { get; set; }
 
+        public DbSet<Image> Images { get; set; }
+
         //all of these three DB context properties represents collection in our database that we will be creating.
 
         //to seed data into database, it is done inside onmodel creating function which we have to override
@@ -103,6 +105,8 @@ namespace NZWalks.API.Data
             //after seeding data go to tools>nupackagemaanger> package manager console and run following commands
             //1-Add-Migration "any migration name"
             //Update-Database //this will insert data into db
+            //Add-Migration "Adding Images Table" -Context "NZWalksDbContext"
+            //Update-DataBase -Context "NZWalksDbContext"
         }
     }
 }

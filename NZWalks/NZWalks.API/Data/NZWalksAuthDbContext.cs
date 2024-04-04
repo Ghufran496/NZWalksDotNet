@@ -41,6 +41,7 @@ namespace NZWalks.API.Data
             //Now as we have to dbcontext then our command for migration will be changed
             //Add-Migration "Creating Auth Database" -Context "NZWalksAuthDbContext"
             //Update-DataBase -Context "NZWalksAuthDbContext"
+            
 
         }
     }
