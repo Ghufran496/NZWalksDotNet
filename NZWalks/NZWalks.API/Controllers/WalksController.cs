@@ -51,7 +51,7 @@ namespace NZWalks.API.Controllers
         //in filter url will be: /api/walks?filterOn=Name&filterQuery=Track
         //in sorting along with filter url will be: /api/walks?filterOn=Name&filterQuery=Track&sortBy=Name&isAscending=True
         ////in pagination along with sorting along with filter 
-        ///url will be: /api/walks?filterOn=Name&filterQuery=Track&sortBy=Name&isAscending=True&pageNumber=1&pageSize=10
+        //url will be: /api/walks?filterOn=Name&filterQuery=Track&sortBy=Name&isAscending=True&pageNumber=1&pageSize=10
 
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)

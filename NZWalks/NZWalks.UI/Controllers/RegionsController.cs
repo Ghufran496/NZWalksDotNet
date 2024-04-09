@@ -32,7 +32,7 @@ namespace NZWalks.UI.Controllers
                 //ensuresuccessstatus code throws an exception so therefore we have to add try catch for it
                 httpResponseMessage.EnsureSuccessStatusCode();
 
-                response.AddRange(await httpResponseMessage.Content.ReadFromJsonAsync<IEnumerable<RegionDto>>());
+                response.AddRange(await httpResponseMessage.Content.ReadFromJsonAsync<IEnumerable<RegionDto>>());//dealing with collection of obj therefore used ienum
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace NZWalks.UI.Controllers
             var httpResponseMessage = await client.SendAsync(httpRequestMessage);
             httpResponseMessage.EnsureSuccessStatusCode();
 
-            var respose = await httpResponseMessage.Content.ReadFromJsonAsync<RegionDto>();
+            var respose = await httpResponseMessage.Content.ReadFromJsonAsync<RegionDto>();//dealing with single obj
 
             if (respose is not null)
             {

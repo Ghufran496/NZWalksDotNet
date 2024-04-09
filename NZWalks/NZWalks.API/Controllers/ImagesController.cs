@@ -16,7 +16,7 @@ namespace NZWalks.API.Controllers
         {
             this.imageRepository = imageRepository;
         }
-
+                                
         // POST: /api/Images/Upload 
         [HttpPost]
         [Route("Upload")]
